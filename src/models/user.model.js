@@ -53,12 +53,12 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-  //   _case: [
-  //     {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: 'Case'
-  //     }
-  //   ],
+    installments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Installment'
+      }
+    ],
   //   _campaign:[
   //     {
   //       type: mongoose.Schema.Types.ObjectId,

@@ -6,6 +6,10 @@ const installmentPlanSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Property'
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
     frequency: {
         type: String,
         enum: ['daily', 'weekly', 'monthly' , 'quarterly', 'yearly'],
@@ -18,11 +22,7 @@ const installmentPlanSchema = new mongoose.Schema(
       type: Number, //1 year
       default: 0,
     },
-    amountPaid: {
-      type: Number,
-      default: 0,
-    },
-    initialPayment: {
+    amoutPaid: {
       type: Number,
       default: 0,
     },
@@ -30,11 +30,6 @@ const installmentPlanSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    paymentSchedules:[{
-      type: Date,
-      default: Date.now,
-     }],
-     
     installments:[{
      type: mongoose.Schema.Types.ObjectId,
      ref: 'Property',
