@@ -1,0 +1,355 @@
+{
+  "todotree": {
+    "tree": [
+      {
+        "key": 1733551900741,
+        "children": [],
+        "todo": {
+          "content": "CREATE THE MODELS",
+          "id": 1733551900741,
+          "level": "default",
+          "done": true,
+          "start": 1733551900741,
+          "focus": false,
+          "end": 1733584263945
+        }
+      },
+      {
+        "key": 1733552370593,
+        "children": [
+          {
+            "key": 1733552400781,
+            "children": [],
+            "todo": {
+              "content": "USERS",
+              "id": 1733552400781,
+              "level": "default",
+              "done": true,
+              "start": 1733552400781,
+              "focus": false,
+              "end": 1733584207010
+            }
+          },
+          {
+            "key": 1733552410881,
+            "children": [
+              {
+                "key": 1733552433853,
+                "children": [],
+                "todo": {
+                  "content": "SIGNUP",
+                  "id": 1733552433853,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733552433853
+                }
+              },
+              {
+                "key": 1733552439419,
+                "children": [],
+                "todo": {
+                  "content": "LOGIN",
+                  "id": 1733552439419,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733552439419
+                }
+              },
+              {
+                "key": 1733552444081,
+                "children": [],
+                "todo": {
+                  "content": "FORGOT PASSWORD",
+                  "id": 1733552444081,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733552444081
+                }
+              },
+              {
+                "key": 1733552451460,
+                "children": [],
+                "todo": {
+                  "content": "SIGNOUT",
+                  "id": 1733552451460,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733552451460
+                }
+              },
+              {
+                "key": 1733552456995,
+                "children": [],
+                "todo": {
+                  "content": "OTP VERIFICATION",
+                  "id": 1733552456995,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733552456995
+                }
+              },
+              {
+                "key": 1733552457056,
+                "children": [],
+                "todo": {
+                  "content": "MORE",
+                  "id": 1733552457056,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733552457056
+                }
+              }
+            ],
+            "todo": {
+              "content": "AUTH",
+              "id": 1733552410881,
+              "level": "default",
+              "done": true,
+              "start": 1733552410881,
+              "focus": false,
+              "end": 1733584205176
+            }
+          },
+          {
+            "key": 1733552415643,
+            "children": [
+              {
+                "key": 1733552486438,
+                "children": [
+                  {
+                    "key": 1733562740155,
+                    "children": [],
+                    "todo": {
+                      "content": "CREATE A BASIC PROPERTY WITHOUT PLAN",
+                      "id": 1733562740155,
+                      "level": "default",
+                      "done": true,
+                      "start": 1733562740156,
+                      "focus": false,
+                      "end": 1733584212567
+                    }
+                  },
+                  {
+                    "key": 1733562786161,
+                    "children": [],
+                    "todo": {
+                      "content": "CREATE A PLAN AND ADD THE ID TO THE PROPERTY",
+                      "id": 1733562786161,
+                      "level": "default",
+                      "done": true,
+                      "start": 1733562786161,
+                      "focus": false,
+                      "end": 1733584213418
+                    }
+                  }
+                ],
+                "todo": {
+                  "content": "CREATE PROPERTY",
+                  "id": 1733552486438,
+                  "level": "default",
+                  "done": true,
+                  "start": 1733552486438,
+                  "focus": false,
+                  "end": 1733584220801
+                }
+              }
+            ],
+            "todo": {
+              "content": "PROPERTY",
+              "id": 1733552415643,
+              "level": "default",
+              "done": true,
+              "start": 1733552415643,
+              "focus": false,
+              "end": 1733584219887
+            }
+          }
+        ],
+        "todo": {
+          "content": "CREATE THE CONTROLLERS",
+          "id": 1733552370593,
+          "level": "default",
+          "done": true,
+          "start": 1733552370593,
+          "focus": false,
+          "end": 1733596620378
+        }
+      },
+      {
+        "key": 1733552379790,
+        "children": [],
+        "todo": {
+          "content": "CREATE THE ROUTES",
+          "id": 1733552379790,
+          "level": "default",
+          "done": true,
+          "start": 1733552379790,
+          "focus": false,
+          "end": 1733584217430
+        }
+      },
+      {
+        "key": 1733552388106,
+        "children": [],
+        "todo": {
+          "content": "CONNECT THEM",
+          "id": 1733552388106,
+          "level": "default",
+          "done": true,
+          "start": 1733552388106,
+          "focus": false,
+          "end": 1733584218268
+        }
+      },
+      {
+        "key": 1733584267257,
+        "children": [
+          {
+            "key": 1733633300331,
+            "children": [
+              {
+                "key": 1733588315300,
+                "children": [],
+                "todo": {
+                  "content": "PURCHASE INSTALLMENT",
+                  "id": 1733588315300,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733588315300
+                }
+              },
+              {
+                "key": 1733588331083,
+                "children": [],
+                "todo": {
+                  "content": "PURCHASE A POOL",
+                  "id": 1733588331083,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733588331083
+                }
+              },
+              {
+                "key": 1733588299714,
+                "children": [],
+                "todo": {
+                  "content": "PURCHASE OUTRIGHT PROPERTY",
+                  "id": 1733588299714,
+                  "level": "default",
+                  "done": false,
+                  "start": 1733588299714
+                }
+              }
+            ],
+            "todo": {
+              "content": "PAYMENT CONTROLLER",
+              "id": 1733633300331,
+              "level": "default",
+              "done": false,
+              "start": 1733633300331
+            }
+          },
+          {
+            "key": 1733633413591,
+            "children": [],
+            "todo": {
+              "content": "PAYMENT ROUTES",
+              "id": 1733633413591,
+              "level": "default",
+              "done": false,
+              "start": 1733633413591
+            }
+          },
+          {
+            "key": 1733633423423,
+            "children": [],
+            "todo": {
+              "content": "PAYMENT TEST",
+              "id": 1733633423423,
+              "level": "default",
+              "done": false,
+              "start": 1733633423423
+            }
+          }
+        ],
+        "todo": {
+          "content": "PURCHASE OF PROPERTY",
+          "id": 1733584267257,
+          "level": "default",
+          "done": false,
+          "start": 1733584267258
+        }
+      },
+      {
+        "key": 1733633108163,
+        "children": [
+          {
+            "key": 1733633117457,
+            "children": [],
+            "todo": {
+              "content": "CREATE COMMENT",
+              "id": 1733633117457,
+              "level": "default",
+              "done": true,
+              "start": 1733633117457,
+              "focus": false,
+              "end": 1733633158861
+            }
+          },
+          {
+            "key": 1733633124686,
+            "children": [],
+            "todo": {
+              "content": "GET ALL COMMENTS",
+              "id": 1733633124686,
+              "level": "default",
+              "done": true,
+              "start": 1733633124686,
+              "focus": false,
+              "end": 1733633160516
+            }
+          },
+          {
+            "key": 1733633137937,
+            "children": [],
+            "todo": {
+              "content": "GET ALL COMMENTS FOR A PROPERTY",
+              "id": 1733633137937,
+              "level": "default",
+              "done": true,
+              "start": 1733633137937,
+              "focus": false,
+              "end": 1733633161219
+            }
+          }
+        ],
+        "todo": {
+          "content": "COMMENT ON PROPERTIES",
+          "id": 1733633108163,
+          "level": "default",
+          "done": false,
+          "start": 1733633108163
+        }
+      }
+    ],
+    "expandKeys": [
+      1733552415643,
+      1733552486438,
+      1733584267257,
+      1733633108163,
+      1733633300331
+    ],
+    "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
+    "add_mode": "bottom",
+    "virtual": false,
+    "timelines": [],
+    "showLine": false,
+    "playFontSize": 24,
+    "title": ".TODO",
+    "autoSort": false,
+    "showEndTime": false,
+    "simpleMode": false,
+    "lang": "en",
+    "version": "1733633432274"
+  }
+}
