@@ -7,8 +7,8 @@ const Comment = require("../models/comment.model");
 const Rating = require("../models/rating.model");
 const Request = require('../models/request.model')
 const InstallmentPlan = require('../models/installment/installmentPlan.model')
-const CoOwnershipPlan = require('../models/payments/coOwnershipPlan.model')
-const OwnershipPool = require('../models/payments/ownershipPool.model')
+const CoOwnershipPlan = require('../models/coown/coOwnershipPlan.model')
+const OwnershipPool = require('../models/coown/ownershipPool.model')
 const sendEmail = require('../utils/sendEmail');
 
 
@@ -377,13 +377,17 @@ exports.GetRatings = catchAsync(async (req, res, next) => {
     }
 });
 
+
+
+
 /**
  * @author Odufu Joel <joel.odufu@gmail.com>
- * @description Post a Property Controller
+ * @description Post An Outright Property  Controller
  * @route `/api/property/postproperty`
  * @access Private
  * @type POST
  */
+
 exports.postProperty = catchAsync(async (req, res, next) => {
     const {
         //Basic Details
@@ -428,6 +432,8 @@ exports.postProperty = catchAsync(async (req, res, next) => {
         housePlan,
     } = req.body;
 
+    console.log(req.user);
+    
     const user = await User.findById(req.user.id); // Retrieve user ID from req.user
 
     // Create a new property Object
@@ -500,7 +506,7 @@ exports.postProperty = catchAsync(async (req, res, next) => {
             await property.save()
         } else {
 
-            //GET THE INPUTS FROM THE USER FOR INSTALLMENT PAYMENT plan
+            //GET THE INPUTS FROM THE ADMIN FOR CO-OWNERSHIP PAYMENT plan
             const { maximumPool } = req.body
             //create an instance of the plan
             const newCoOwnershipPlan = new CoOwnershipPlan({
@@ -508,7 +514,8 @@ exports.postProperty = catchAsync(async (req, res, next) => {
             })
             //save that instance 
             await newCoOwnershipPlan.save()
-
+            console.log(newCoOwnershipPlan);
+            
             //create all the pools
             for (let index = 0; index < newCoOwnershipPlan.maximumPool; index++) {
                 //create instance of the pool
@@ -519,7 +526,7 @@ exports.postProperty = catchAsync(async (req, res, next) => {
                 //save the pool
                 await newPool.save()
                 //add the pool to the plan
-                newCoOwnershipPlan.ownershipShares.push(newPool.id);
+                newCoOwnershipPlan.ownershipShares.push(newPool._id);
                 //save the plan
                 await newCoOwnershipPlan.save()
             }

@@ -1,0 +1,14 @@
+openapi: '3.0.3'
+info:
+  title: SALIS HOMES APP
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/api/v1/
+paths:
+  /auth/login:
+    post:
+          
+      responses:
+        '200':
+          description: OK
+

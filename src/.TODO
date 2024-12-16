@@ -327,17 +327,112 @@
           "content": "COMMENT ON PROPERTIES",
           "id": 1733633108163,
           "level": "default",
+          "done": true,
+          "start": 1733633108163,
+          "focus": false,
+          "end": 1733677069568
+        }
+      },
+      {
+        "key": 1733677075736,
+        "children": [
+          {
+            "key": 1733677155981,
+            "children": [],
+            "todo": {
+              "content": "CREATED WHEN CREATING A PRODUCT",
+              "id": 1733677155981,
+              "level": "default",
+              "done": true,
+              "start": 1733677155981,
+              "focus": false,
+              "end": 1733684097148
+            }
+          },
+          {
+            "key": 1733677255043,
+            "children": [],
+            "todo": {
+              "content": "VIEWING CAN BE DONE IN ITS OWN ROUTE",
+              "id": 1733677255043,
+              "level": "default",
+              "done": false,
+              "start": 1733677255043
+            }
+          },
+          {
+            "key": 1733677270740,
+            "children": [],
+            "todo": {
+              "content": "UPDATE CAN BE DONE DURING PAYMENTS ROUTES",
+              "id": 1733677270740,
+              "level": "default",
+              "done": false,
+              "start": 1733677270740
+            }
+          }
+        ],
+        "todo": {
+          "content": "MAKE CO OWNING STAND ALON",
+          "id": 1733677075736,
+          "level": "default",
           "done": false,
-          "start": 1733633108163
+          "start": 1733677075736
+        }
+      },
+      {
+        "key": 1733677095177,
+        "children": [
+          {
+            "key": 1733677175969,
+            "children": [],
+            "todo": {
+              "content": "ALSO CREATED WHEN CREATING A PRODUCT",
+              "id": 1733677175969,
+              "level": "default",
+              "done": false,
+              "start": 1733677175969
+            }
+          },
+          {
+            "key": 1733677192872,
+            "children": [],
+            "todo": {
+              "content": "VIEWING CAN BE DONE IN ITS OWN ROUTE",
+              "id": 1733677192872,
+              "level": "default",
+              "done": false,
+              "start": 1733677192872
+            }
+          },
+          {
+            "key": 1733677218061,
+            "children": [],
+            "todo": {
+              "content": "UPDATE CAN BE DONE IN THE PAYMENT ROUTES",
+              "id": 1733677218061,
+              "level": "default",
+              "done": false,
+              "start": 1733677218061
+            }
+          }
+        ],
+        "todo": {
+          "content": "MAKE POOL STAND ALONE",
+          "id": 1733677095177,
+          "level": "default",
+          "done": false,
+          "start": 1733677095177
         }
       }
     ],
     "expandKeys": [
       1733552415643,
       1733552486438,
-      1733584267257,
       1733633108163,
-      1733633300331
+      1733633300331,
+      1733677075736,
+      1733677095177
     ],
     "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
     "add_mode": "bottom",
@@ -350,6 +445,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1733633432274"
+    "version": "1733684097254"
   }
 }

@@ -9,7 +9,7 @@ router.get("/getpropertys", propertyController.getAll)
 router.get("/getproperty/:id", propertyController.getProperty)
 
 // Protect all routes after this middleware
-// router.use(authController.protect);
+router.use(authController.protect);
 
 router.get("/", propertyController.ping)
 
@@ -18,6 +18,8 @@ router.get("/getallcomments", propertyController.GetComments)
 router.get("/getPropertyComments/:id", propertyController.GetPropertyComments)
 
 router.post("/postproperty" ,propertyController.postProperty)
+router.post("/postInstalmentproperty" ,propertyController.postProperty)
+router.post("/postCoOwnproperty" ,propertyController.postProperty)
 
 router.post("/postcomment" ,propertyController.createComment)
 

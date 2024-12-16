@@ -1,0 +1,312 @@
+openapi: 3.0.0
+
+info:
+  title: Salis App
+  description: The API for Salis App
+  version: "00.1"
+  contact:
+    name: Emerald Codelines
+    email: joel.odufu@gmail.com
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: The Home Page for Properties
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: [] # Apply Bearer token globally to all endpoints
+
+tags:
+  - name: Authentication
+    description: Endpoints related to user authentication (login, signup, etc.)
+  - name: Properties
+    description: Endpoints related to managing and viewing properties
+  - name: CoOwnershipPlan 
+    description: Endpoint for Viewing and managing Co=CoOwnership Plan
+
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Authentication
+      description: Register User
+      summary: Register Users
+      responses:
+        200:
+          description: User successfully registered
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email: 
+                  type: string
+                password: 
+                  type: string
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      description: Login User to the Page
+      summary: Login User to the Page
+      responses:
+        200:
+          description: User successfully logged in
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
+  /property/getpropertys:
+    get:
+      tags:
+        - Properties
+      description: Get Lists of all Properties
+      summary: Get Lists of all Properties
+      responses:
+        200:
+          description: Successfully Got all the Properties
+
+  /property/{id}:
+    get:
+      tags:
+        - Properties
+      description: Get Single Property
+      summary: Get Single Property
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Get Property by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+
+  /property/postInstalmentproperty:
+    post:
+      tags:
+        - Properties
+      description: Create Installment Property
+      summary: Create Installment Property
+      responses:
+        200:
+          description: Property created successfully
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: 
+                  type: string
+                details:
+                  type: string
+                address:
+                  type: string
+                price:
+                  type: number
+                paymentPlanType: 
+                  type: string
+                minimumInitialPayment:
+                  type: number
+                closingPeriod:
+                  type: number
+                images:
+                  type: array
+                video:
+                  type: string
+                electricity: 
+                  type: boolean
+                security: 
+                  type: boolean
+                water: 
+                  type: boolean
+                bedrooms:
+                  type: number
+                bathrooms: 
+                  type: number
+                parkingSpace:
+                  type: string
+                garden:
+                  type: string
+                pool:
+                  type: string
+                registeredSurvey:
+                  type: boolean
+                governmentApproved:
+                  type: boolean
+                siteMap:
+                  type: string
+                housePlan:
+                  type: string
+                documents:
+                  type: array
+                  
+
+  /property/postCoOwnproperty:
+    post:
+      tags:
+        - Properties
+      description: Create Co-ownership Property
+      summary: Create Co-ownership Property
+      responses:
+        200:
+          description: Property created successfully
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: 
+                  type: string
+                details:
+                  type: string
+                address:
+                  type: string
+                price:
+                  type: number
+                paymentPlanType: 
+                  type: string
+                maximumPool:
+                  type: number
+                images:
+                  type: array
+                video:
+                  type: string
+                electricity: 
+                  type: boolean
+                security: 
+                  type: boolean
+                water: 
+                  type: boolean
+                bedrooms:
+                  type: number
+                bathrooms: 
+                  type: number
+                parkingSpace:
+                  type: string
+                garden:
+                  type: string
+                pool:
+                  type: string
+                registeredSurvey:
+                  type: boolean
+                governmentApproved:
+                  type: boolean
+                siteMap:
+                  type: string
+                housePlan:
+                  type: string
+                documents:
+                  type: array
+                  
+
+  /property/postProperty:
+    post:
+      tags:
+        - Properties
+      description: Create Outright Property
+      summary: Create Outright Property
+      responses:
+        200:
+          description: Property created successfully
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: 
+                  type: string
+                details:
+                  type: string
+                address:
+                  type: string
+                price:
+                  type: number
+                paymentPlanType: 
+                  type: string
+                images:
+                  type: array
+                video:
+                  type: string
+                electricity: 
+                  type: boolean
+                security: 
+                  type: boolean
+                water: 
+                  type: boolean
+                bedrooms:
+                  type: number
+                bathrooms: 
+                  type: number
+                parkingSpace:
+                  type: string
+                garden:
+                  type: string
+                pool:
+                  type: string
+                registeredSurvey:
+                  type: boolean
+                governmentApproved:
+                  type: boolean
+                siteMap:
+                  type: string
+                housePlan:
+                  type: string
+                documents:
+                  type: array
+                  
+  /coOwnershipPlan:
+    get:
+      tags:
+        - CoOwnershipPlan
+      description: Ping Co CoOwnership Management 
+      summary: Ping Co CoOwnership Management 
+      responses:
+        200:
+          description: Success
+    
+  #VIEW ALL COOWNERSHIP PLANS
+  /coOwnershipPlan/getcoOwnershipPlans:
+    get:
+      tags:
+        - CoOwnershipPlan
+      description: Get All Created Co-own Plans
+      summary: Get All Created Co-own Plans
+      responses:
+        200:
+         description: Success
+        

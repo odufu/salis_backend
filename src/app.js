@@ -10,6 +10,7 @@ const campaignRoute = require('./routes/campaign.route');
 const propertyRoute = require('./routes/property.route');
 const installmentRoute = require('./routes/installment.route');
 const installmentPlanRoute = require('./routes/installmentPlan.route');
+const coOwnershipPlanRoute = require('./routes/coOwnershipPlan.route');
 const caseRoute = require('./routes/case.route');
 const globalHandler = require('./controllers/error.controller');
 const xss = require('xss-clean');
@@ -58,6 +59,7 @@ app.use('/api/v1/campaign', campaignRoute)
 app.use('/api/v1/property', propertyRoute)
 app.use('/api/v1/installment', installmentRoute)
 app.use('/api/v1/installmentPlan', installmentPlanRoute)
+app.use('/api/v1/coOwnershipPlan', coOwnershipPlanRoute)
 
 app.use('/api/v1/donation', donationRoute);
 
