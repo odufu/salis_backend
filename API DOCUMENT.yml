@@ -10,7 +10,7 @@ info:
 
 servers:
   - url: http://localhost:3000/api/v1
-    description: The Home Page for Properties
+    description: The Home Page for PROPERTY
 
 components:
   securitySchemes:
@@ -23,18 +23,31 @@ security:
   - BearerAuth: [] # Apply Bearer token globally to all endpoints
 
 tags:
-  - name: Authentication
+  - name: AUTH
     description: Endpoints related to user authentication (login, signup, etc.)
-  - name: Properties
+  - name: USERS
+    description: Manage User Accounts  
+  - name: PROPERTY
     description: Endpoints related to managing and viewing properties
-  - name: CoOwnershipPlan 
+  - name: CO-OWNERSHIP 
     description: Endpoint for Viewing and managing Co=CoOwnership Plan
+  - name: COMMENTS
+    description: Comment on properties
+  - name: CONTRACTS
+    description: contractTerms and agreement statements
+  - name: INVOICE
+    description: INVOICE Management
+  - name: INSTALLMENT
+    description: Inatallment Chunck Management
+  - name: INSTALLMENT-PLANS
+    description: Inatallment Chunck Management
+
 
 paths:
   /auth/signup:
     post:
       tags:
-        - Authentication
+        - AUTH
       description: Register User
       summary: Register Users
       responses:
@@ -61,7 +74,7 @@ paths:
   /auth/login:
     post:
       tags:
-        - Authentication
+        - AUTH
       description: Login User to the Page
       summary: Login User to the Page
       responses:
@@ -83,20 +96,319 @@ paths:
                 password:
                   type: string
 
+   #LOGIN AS AN ADIMN               
+  /auth/adminlogin:
+    post:
+      tags:
+        - AUTH
+      description: ADMIN LOGIN
+      summary: ADMIN LOGIN
+      responses:
+        200:
+          description: ADMIN successfully logged in
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+
+
+   #VERIFY OTP             
+  /auth/verify:
+    post:
+      tags:
+        - AUTH
+      description: Verify OTP Sent to your mail
+      summary: Verify OTP Sent to your mail
+      responses:
+        200:
+          description: Code VERIFIED
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                otpCode:
+                  type: number
+
+
+
+   #RESEND VERIFICATION OTP             
+  /auth/resendverification:
+    post:
+      tags:
+        - AUTH
+      description: OTP used to verify your account will be sent your email
+      summary: Verify OTP Resent to your mail
+      responses:
+        200:
+          description: Verify OTP Resent to your mail
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+
+
+
+
+   #FORGOT PASSWORD             
+  /auth/forgotPassword:
+    post:
+      tags:
+        - AUTH
+      description: FORGOT PASSWORD REQUEST
+      summary: FORGOT PASSWORD REQUEST
+      responses:
+        200:
+          description: Code sent to your email already
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+
+
+
+
+
+   #RESET PASSWORD             
+  /auth/resetpassword:
+    post:
+      tags:
+        - AUTH
+      description: RESET PASSWORD REQUEST
+      summary: RESET PASSWORD REQUEST
+      responses:
+        200:
+          description: Password Reset Success
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                otpCode:
+                  type: number
+                password:
+                  type: string
+                passwordConfirm:
+                  type: string
+
+
+
+
+   #UPDATE PASSWORD             
+  /auth/updatepassword:
+    post:
+      tags:
+        - AUTH
+      description: Updating your password, as a logged in user
+      summary: Update your Password
+      responses:
+        200:
+          description: Password Updated Successfully
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                confirmPassword:
+                  type: string
+
+
+   #LOGOUT ACCOUNT             
+  /auth/logout:
+    post:
+      tags:
+        - AUTH
+      description: LOG OUT OF YOUR ACCOUNT
+      summary: LOG OUT OF YOUR ACCOUNT
+      responses:
+        200:
+          description: Password Reset Success
+          content: 
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                otpCode:
+                  type: number
+                password:
+                  type: string
+                passwordConfirm:
+                  type: string
+
+
+# U S E R S   A C C O U N T   M A N A G E M E N T
+
+#PING USERS
+  /user:
+    get:
+      tags:
+        - USERS
+      description: Ping Users Route
+      summary: Ping Users Route
+      responses:
+        200:
+          description: Success
+
+#GET ALL USERS
+  /user/getUsers:
+    get:
+      tags:
+        - USERS
+      description: Get All Users
+      summary: Get All Users
+      responses:
+        200:
+          description: Success  
+
+
+#GET SINGLE USERS
+  /user/getprofile/{id}:
+    get:
+      tags:
+        - USERS
+      description: Get All Users
+      summary: Get All Users
+      parameters:
+      - in: path
+        name: id
+        description: Get Single User Profile
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success  
+
+
+# E D I T   P R O F I L E
+  /user/editprofile/{id}:
+    put:
+      tags:
+        - USERS
+      description: Update User Details
+      summary: Update User Details
+      parameters:
+      - in: path
+        name: id 
+        description: Update User by ud 
+        required: true
+        schema:
+          type: string
+      responses:
+        200:  
+         description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                image:
+                  type: string
+                gender:
+                  type: string
+                phone:
+                  type: string
+                address:
+                  type: string
+
+#DELETE USER ACCOUNT
+  /user/deleteprofile/{id}:
+    delete:
+      tags:
+        - USERS
+      description: Delete User Accounts
+      summary: Delete User Accounts
+      parameters:
+      - in: path
+        name: id 
+        description: Delete user by this ID 
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+
+
+
+
+# G E T   A L L   P R O P E R T I E S
   /property/getpropertys:
     get:
       tags:
-        - Properties
-      description: Get Lists of all Properties
-      summary: Get Lists of all Properties
+        - PROPERTY
+      description: Get Lists of all PROPERTY
+      summary: Get Lists of all PROPERTY
       responses:
         200:
-          description: Successfully Got all the Properties
+          description: Successfully Got all the PROPERTY
 
+# G E T   P R O P E R T Y   B Y   I D
   /property/{id}:
     get:
       tags:
-        - Properties
+        - PROPERTY
       description: Get Single Property
       summary: Get Single Property
       parameters:
@@ -113,7 +425,7 @@ paths:
   /property/postInstalmentproperty:
     post:
       tags:
-        - Properties
+        - PROPERTY
       description: Create Installment Property
       summary: Create Installment Property
       responses:
@@ -171,11 +483,11 @@ paths:
                 documents:
                   type: array
                   
-
+# P O S T   C O - O W N E R S H I P   P R O P E R T Y  P L A N
   /property/postCoOwnproperty:
     post:
       tags:
-        - Properties
+        - PROPERTY
       description: Create Co-ownership Property
       summary: Create Co-ownership Property
       responses:
@@ -200,6 +512,8 @@ paths:
                   type: string
                 maximumPool:
                   type: number
+                contractTerms:
+                  type: string
                 images:
                   type: array
                 video:
@@ -230,12 +544,14 @@ paths:
                   type: string
                 documents:
                   type: array
-                  
+
+
+# P O S T   O U T R I G H T   P R O P E R T Y
 
   /property/postProperty:
     post:
       tags:
-        - Properties
+        - PROPERTY
       description: Create Outright Property
       summary: Create Outright Property
       responses:
@@ -289,10 +605,97 @@ paths:
                 documents:
                   type: array
                   
+
+# U P D A T E  P R O P T E R Y  L I G H T L Y
+  /property/basiceditProperty/{id}:
+    put:
+      tags:
+        - PROPERTY
+      description: Update Property Details
+      summary: Update Property Details
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Update Property by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Property Updated successfully
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: 
+                  type: string
+                details:
+                  type: string
+                address:
+                  type: string
+                price:
+                  type: number
+                images:
+                  type: array
+                video:
+                  type: string
+                electricity: 
+                  type: boolean
+                security: 
+                  type: boolean
+                water: 
+                  type: boolean
+                bedrooms:
+                  type: number
+                bathrooms: 
+                  type: number
+                parkingSpace:
+                  type: string
+                garden:
+                  type: string
+                pool:
+                  type: string
+                registeredSurvey:
+                  type: boolean
+                governmentApproved:
+                  type: boolean
+                siteMap:
+                  type: string
+                housePlan:
+                  type: string
+                documents:
+                  type: array
+                  
+    
+
+# H A R D   U P D A T E  P R O P T E R Y  L I G H T L Y
+  /property/deletProperty/{id}:
+    delete:
+      tags:
+        - PROPERTY
+      description: DELET PROPERTY
+      summary:  DELET PROPERTY
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Delete Property by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Property Deleted successfully
+
+
+# C O - O W N E R S H I P   E N D P O I N T S     
+
   /coOwnershipPlan:
     get:
       tags:
-        - CoOwnershipPlan
+        - CO-OWNERSHIP
       description: Ping Co CoOwnership Management 
       summary: Ping Co CoOwnership Management 
       responses:
@@ -303,10 +706,564 @@ paths:
   /coOwnershipPlan/getcoOwnershipPlans:
     get:
       tags:
-        - CoOwnershipPlan
+        - CO-OWNERSHIP
       description: Get All Created Co-own Plans
       summary: Get All Created Co-own Plans
       responses:
         200:
          description: Success
+
+  #VIEW SINGLE COOWNERSHIP PLANS
+  /coOwnershipPlan/getcoOwnershipPlan/{id}:
+    get:
+      tags:
+        - CO-OWNERSHIP
+      description: Get All Created Co-own Plans
+      summary: Get All Created Co-own Plans
+      parameters:
+      - in: path
+        name: id
+        description: Get CoOwnershipPlan by id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+         description: Success
+
+
+
+  #DELETE SINGLE COOWNERSHIP PLANS
+  /coOwnershipPlan/deletecoOwnershipPlan/{id}:
+    delete:
+      tags:
+        - CO-OWNERSHIP
+      description: DELETE SINGLE Co-own Plans
+      summary: DELETE SINGLE Co-own Plans
+      parameters:
+      - in: path
+        name: id
+        description: DELETE CoOwnershipPlan by id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+         description: Success
+
+
+# G E T   A L L   C O M M E N T S
+  /property/getallcomments:
+    get:
+      tags:
+        - COMMENTS
+      description: Describe this route
+      summary: Describe this route
+      responses:
+        200:
+          description: Success
+# G E T   A L L   C O M M E N T S
+  /property/getPropertyComments/{id}:
+    get:
+      tags:
+        - COMMENTS
+      description: Describe this route
+      summary: Describe this route
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Delete Property by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+
+
+#   P O S T   A   C O M M E N T   O N   A   P R O P E R T Y
+  /property/postcontract:
+    post:
+      tags:
+        - COMMENTS
+      description: Create a new contracts that can be attached to an invoice
+      summary: Create a new contracts that can be attached to an invoice
+      responses:
+        200:
+         description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                content:
+                  type: string
+
+#CONTRACTS TERMS AND AGREEMENT TO THAT BINDS PURCHASE OF PROPERTIES BASED ON THE PL A N S
+
+#PING IF THE ENTIRE ROUTE IS WORKING
+  /contract:
+    get:
+      tags:
+        - CONTRACTS
+      description: Ping Contract API
+      summary: Ping Contract API
+      responses:
+        200:
+          description: Success
+  
+#GET ALL CONTRACTS
+  /contract/getcontracts:
+    get:
+      tags:
+        - CONTRACTS
+      description: Get All Contracts that have been created
+      summary: Get All Contracts that have been created
+      responses:
+        200:
+          description: Success
+      
+#GET SINGLE CONTRACT BY ID
+  /contract/getcontract/{id}:
+    get:
+      tags:
+        - CONTRACTS
+      description: Get All Contracts that have been created
+      summary: Get All Contracts that have been created
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Get Contract by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+
+
+
+      
+
+  #CREATE NEW CONTRACT
+  /contract/postContract:
+    post:
+      tags:
+        - CONTRACTS
+      description: Create a new Contract agreement
+      summary: Create a new Contract agreement
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contractHeader:
+                  type: string
+                contractTerms:
+                  type: string
+                contractType:
+                  type: string
+                
+
+
+#UPDATE SINGLE CONTRACT BY ID
+  /contract/editcontract/{id}:
+    put:
+      tags:
+        - CONTRACTS
+      description: Edit Contracts by their id 
+      summary: Edit Contracts by their id 
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Edit Contract by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contractHeader:
+                  type: string
+                contractTerms:
+                  type: string
+                contractType:
+                  type: string
+                
+
+#DELETE  CONTRACT BY ID 
+  /contract/deletecontract/{id}:
+    delete:
+      tags:
+        - CONTRACTS
+      description: Delete contact by ID
+      summary: Delete contact by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Delete Contract by id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+
+#INSTALLMENT ROUTES
+  /installment:
+    get:
+      tags:
+        - INSTALLMENT
+      description: Ping Installment Route
+      summary: Ping Installment Route
+      responses:
+        200:
+          description: Success
         
+#GET ALL INSTALLMENTS 
+  /installment/getinstallments:
+    get:
+      tags:
+        - INSTALLMENT
+      description: Get all installments
+      summary: Get all installments
+      responses:
+        200:
+          description: Success
+        
+#GET INSTALLMENT BY ID
+  /installment/getinstallment/{id}:
+    get:
+      tags:
+        - INSTALLMENT
+      description: Get all installments
+      summary: Get all installments
+      parameters:
+      - in: path
+        name: id
+        description: description
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+        
+#CREATE AN INSTALLMENT 
+  /installment/postinstallment:
+    post:
+      tags:
+        - INSTALLMENT
+      description: Create an Installment
+      summary: Create an Installment
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                amount:
+                  type: string
+                dueDate:
+                  type: string
+
+
+#EDIT AN INSTALLMENT 
+  /installment/edit/{id}:
+    put:
+      tags:
+        - INSTALLMENT
+      description: Edit an Installment
+      summary: Edit an Installment
+      parameters:
+      - in: path
+        name: id 
+        description: Edit Property by ID
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                amount:
+                  type: string
+                dueDate:
+                  type: string
+
+
+
+# DELETE AN INSTALLMENT 
+  /installment/delete/{id}:
+    delete:
+      tags:
+        - INSTALLMENT
+      description: DELETE and Installment
+      summary: DELETE and Installment
+      parameters:
+      - in: path
+        name: id 
+        description: Edit Property by ID
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+     
+
+
+
+# PING INVOICE ROUTE
+  /invoice:
+    get:
+      tags:
+        - INVOICE
+      description: Ping Invoice route
+      summary: Ping Invoice route
+      responses:
+        200:
+          description: Success
+
+# GET ALL INVOICES
+  /invoice/getinvoices:
+    get:
+      tags:
+        - INVOICE
+      description: Get All Invoices
+      summary: Get All Invoices
+      responses:
+        200:
+          description: Success
+
+#CREATE OUTRIGHT INCOICES
+
+  /invoice/postOutrightInvoice:
+    post:
+      tags:
+        - INVOICE
+      description: Create Outright Property Payment plan
+      summary: Create Outright Property Payment plan
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                ownerId:
+                  type: string
+                dueDate::
+                  type: string
+
+
+
+#CREATE INSTALLMENT INCOICES
+
+  /invoice/postInstallmentInvoice:
+    post:
+      tags:
+        - INVOICE
+      description: Create Ivoice for Installment planned property
+      summary: Create Ivoice for Installment planned property
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                ownerId:
+                  type: string
+                installmentId:
+                  type: string
+
+
+#CREATE CO-OWNERSHIP INCOICES
+
+  /invoice/postOwnershipSlotInvoice:
+    post:
+      tags:
+        - INVOICE
+      description: Create Invoice is for Co-ownership Plan
+      summary: Create Invoice is for Co-ownership Plan
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                ownerId:
+                  type: string
+                ownershipPoolId:
+                  type: string
+                dueDate:
+                  type: string
+
+
+#UPDATE INVOICE DETAILS
+  /invoice/editInvoice/{id}:
+    put:
+      tags:
+        - INVOICE
+      
+      description: Edit Invoice
+      summary: Edit Invoice
+      parameters:
+        - in: path
+          name: id
+          description: Get Invoice by ID and Update
+        
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyId:
+                  type: string
+                ownerId:
+                  type: string
+                ownershipPoolId:
+                  type: string
+                installmentId:
+                  type: string
+                dueDate:
+                  type: string
+  
+
+#DELETE INVOICE BY ID
+  /invoice/deleteinvoice/{id}:
+    delete:
+      tags:
+        - INVOICE
+      description: Delete Invoice by ID
+      summary: Delete Invoice by ID
+      parameters:
+      - in: path
+        name: id
+        description: Delete Invoice by ID
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+
+
+#INSTALLMNET PLAN MANAGEMENT
+
+#Ping Route
+  /installmentPlan:
+    get:
+      tags:
+        - INSTALLMENT-PLANS
+      description: Ping Installment Plan Route
+      summary: Ping Installment Plan Route
+      responses:
+        200:
+          description: Success
+        
+
+#Get All Installment Plans
+  /installmentPlan/getinstallmentPlans:
+    get:
+      tags:
+        - INSTALLMENT-PLANS
+      description: Get All Installment Plan Route
+      summary: Get All Installment Plan Route
+      responses:
+        200:
+          description: Success
+        
+#Get All Installment Plans
+  /installmentPlan/getinstallmentPlan/{id}:
+    get:
+      tags:
+        - INSTALLMENT-PLANS
+      description: Get All Installment Plan Route
+      summary: Get All Installment Plan Route
+      parameters:
+      - in: path
+        name: id 
+        description: Get Single plan 
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+
+
+# EDIT INSTALLMENTAL PLAN IF NO PAYMENT PLAN HAVE BEEN BEEN SUBSCRIBED TO YET
+
+  /installmentPlan/editInstallmentPlan/{id}:
+    put:
+      tags:
+        - INSTALLMENT-PLANS
+      description: Edit Installment Plan
+      summary: Edit Installment Plan
+      parameters:
+      - in: path
+        name: id 
+        description: Edit Installment Plan by Id
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          

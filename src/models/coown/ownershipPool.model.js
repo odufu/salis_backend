@@ -13,6 +13,10 @@ const OwnershipPoolSchema = new mongoose.Schema({
       ref: 'User',
       default: null, // Default to null when not occupied
     },
+    coOwnershipPlan: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'CoOwnershipPlan',
+    },
     isOccupied: {
       type: Boolean,
       default: false, // Default to not occupied

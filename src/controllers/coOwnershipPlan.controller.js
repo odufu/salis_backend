@@ -5,6 +5,7 @@ const OwnershipPool = require('../models/coown/ownershipPool.model');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
+
 /**
  * @author Joel Odufu <joel.odufu@ust.edu.ng>
  * @description Ping the Route `test`

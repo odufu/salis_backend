@@ -7,17 +7,18 @@ const router = express()
 // Protect all routes after this middleware
 router.use(authController.protect);
 
+
 router.get("/", userController.ping)
 
-router.get("/getusers",userController.getAll)
+router.get("/getusers",userController.getUsers)
 
 router.get("/getprofile/:id", userController.getProfile)
 
-router.get("/campaigns", userController.getCampaignsByStatus)
+// router.get("/campaigns", userController.getCampaignsByStatus)
 
-router.put("/admin/approve/:campaignId", authController.restrict('Admin'), userController.approveCampaign)
+// router.put("/admin/approve/:campaignId", authController.restrict('Admin'), userController.approveCampaign)
 
-router.get("/admin/users", authController.restrict('Admin'), userController.getUsers)
+// router.get("/admin/users", authController.restrict('Admin'), userController.getUsers)
 
 router.put('/editprofile/:id', userController.editProfile);
 

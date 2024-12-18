@@ -170,6 +170,10 @@ exports.ngoSignup = catchAsync(async (req, res, next) => {
       lowerCaseAlphabets: false,
     }));
 
+    await newUser.save({ validateBeforeSave: false });
+
+    //PROCCESS HTML FOR MESSAGING
+
     const html = fs.readFileSync('otp.html', 'utf8');
     function replacePlaceholders(htmlContent, name, otp) {
       return htmlContent
@@ -178,12 +182,13 @@ exports.ngoSignup = catchAsync(async (req, res, next) => {
     }
     const processedHtml = replacePlaceholders(html, name, otp);
 
-    await newUser.save({ validateBeforeSave: false });
-
+    //MAKE THE MESSAGE THE PROCCESSED HTML
     const message = processedHtml;
+
+    //SEND THE EMAIL
     await sendEmail({
       to: newUser.email,
-      subject: 'Welcome to Fundezer 🚀',
+      subject: 'Welcome to SALIS 🚀',
       message,
     });
 
@@ -540,7 +545,7 @@ exports.restrict = (...userTypes) => {
     // userTypes: ["Ngo","Sponsor", "Admin"]
 
     console.log(req.user.userType);
-    
+
     if (!userTypes.includes(req.user.userType)) {
       return next(
         new AppError('You do not have permission to perform this action', 403)

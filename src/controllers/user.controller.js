@@ -22,32 +22,32 @@ exports.ping = catchAsync(async (req, res, next) => {
   });
 });
 
-/**
- * @author Joel Odufu <joel.odufu@ust.edu.ng>
- * @description Get all Users Controller
- * @route `/api/user/getusers`
- * @access Private
- * @type GET
- */
-exports.getAll = catchAsync(async(req, res, next)=>{
-  try {
-    const data = await User.find().populate(["_campaign", "_donation"])
+// /**
+//  * @author Joel Odufu <joel.odufu@ust.edu.ng>
+//  * @description Get all Users Controller
+//  * @route `/api/user/getusers`
+//  * @access Private
+//  * @type GET
+//  */
+// exports.getAll = catchAsync(async(req, res, next)=>{
+//   try {
+//     const data = await User.find().populate(["_campaign", "_donation"])
 
-    // Check if the users exists
-    if(!data){
-      return next(new AppError("Users not found", 404));
-    }
+//     // Check if the users exists
+//     if(!data){
+//       return next(new AppError("Users not found", 404));
+//     }
 
-    // Return data of list of all users
-    res.status(200).json({
-        success: true,
-        len: data.length,
-        data
-    })
-  } catch (error) {
-    return next(new AppError("An error occured, please try again", 500)); 
-  }
-})
+//     // Return data of list of all users
+//     res.status(200).json({
+//         success: true,
+//         len: data.length,
+//         data
+//     })
+//   } catch (error) {
+//     return next(new AppError("An error occured, please try again", 500)); 
+//   }
+// })
 
 /**
  * @author Joel Odufu <joel.odufu@ust.edu.ng>
@@ -59,7 +59,7 @@ exports.getAll = catchAsync(async(req, res, next)=>{
 exports.getProfile = catchAsync(async (req, res, next) => {
   try {
         // Get the user by id
-    const data = await User.findById(req.params.id).populate(["_campaign", "_donation"])
+    const data = await User.findById(req.params.id)
 
     // Check if the user exists
     if (!data) {
@@ -72,7 +72,7 @@ exports.getProfile = catchAsync(async (req, res, next) => {
       data,
     });
   } catch (error) {
-    return next(new AppError("An error occured, please try again", 500)); 
+    return next(new AppError(error, 500)); 
   }
 });
 
@@ -193,7 +193,7 @@ exports.getUsers = catchAsync(async (req, res, next) => {
       data: users,
     });
   } catch (error) {
-    return next(new AppError("An error occured, please try again", 500)); 
+    return next(new AppError(error.message, 500)); 
   }
 });
 

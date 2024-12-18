@@ -8,6 +8,7 @@ const Case = require('../models/cases.model')
 const mongoose = require('mongoose');
 const { startOfWeek, endOfWeek, startOfMonth, endOfMonth } = require('date-fns');
 
+
 /**
  * @author Joel Odufu <joel.odufu@ust.edu.ng>
  * @description Ping the Route `test`
@@ -15,6 +16,8 @@ const { startOfWeek, endOfWeek, startOfMonth, endOfMonth } = require('date-fns')
  * @access Public
  * @type POST
  */
+
+
 exports.ping = catchAsync(async (req, res, next) => {
     res.status(200).json({
         success: true,
@@ -126,17 +129,23 @@ exports.makePayment = catchAsync(async (req, res, next) => {
             //FOR OUTRIGHT (Make full payent)
 
             //decline payment for property that is fully paid for or taken
-            if (property.isTaken) {
+            //TODO: CHANGE IsTaken to STATUS
+            if (property.status=="pending") {
                 return res.status(404).json({
                     status: false,
                     message: 'This Property is off the market',
+                });
+            } else if (property.status=="sold"){
+                return res.status(404).json({
+                    status: false,
+                    message: 'This Property is Sold',
                 });
             }
 
             //Create new instance of the payment
             const payment = new Payment({
                 user: req.user.id,
-                property: property,
+                property: propertyId,
                 amount: property.price,
                 paymentType: "outright",
                 paymentNote: paymentNote
@@ -150,7 +159,7 @@ exports.makePayment = catchAsync(async (req, res, next) => {
             //add the payment instance to the property
             property.paymentsMade.push(payment.id)
             //make propery to be off the market
-            property.isTaken=true
+            property.status="sold"
 
             //Save the new instance of the property
             await property.save()
@@ -170,10 +179,15 @@ exports.makePayment = catchAsync(async (req, res, next) => {
         
         try {
             //decline payment for property that is fully paid for or taken
-            if (property.isTaken) {
+            if (property.status=="pending") {
                 return res.status(404).json({
                     status: false,
                     message: 'This Property is off the market',
+                });
+            } else if (property.status=="sold"){
+                return res.status(404).json({
+                    status: false,
+                    message: 'This Property is Sold',
                 });
             }
 
@@ -195,7 +209,7 @@ exports.makePayment = catchAsync(async (req, res, next) => {
             //add the payment instance to the property
             property.paymentsMade.push(payment.id)
             //make propery to be off the market
-            property.isTaken=true
+            property.status="pending"
 
             //Save the new instance of the property
             await property.save()

@@ -10,8 +10,8 @@ router.get("/", authController.ping)
 // Signup route
 router.post("/signup", authController.signup)
 
-// Ngo route
-router.post("/sponsorsignup", authController.ngoSignup)
+// // Ngo route
+// router.post("/sponsorsignup", authController.ngoSignup)
 
 // Login route
 router.post("/login",authController.login)

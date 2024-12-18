@@ -133,19 +133,26 @@ exports.editInstallmentPlan = catchAsync(async (req, res, next) => {
   try {
     const { id } = req.params;
     const updates = req.body;
-  
+
+    //does the plan have instances already created?
+     const installmentPlan = await InstallmentPlan.findById(id)
+     if (installmentPlan.installments.length()==0) {
+      return next(new AppError("cannot eddit this it already ain", 500));
+     }
+    // If yes, cannot edit
+    //if no continue editing
     // Find the user by ID
-    const installmentPlan = await InstallmentPlan.findByIdAndUpdate(id, updates, { new: true });
+    const unstallmentPlan = await InstallmentPlan.findByIdAndUpdate(id, updates, { new: true });
   
     // Check if the installmentPlan exists
-    if (!installmentPlan) {
+    if (!unstallmentPlan) {
       return next(new AppError('InstallmentPlan not found', 404));
     }
   
     res.status(200).json({
       success: true,
       message: 'InstallmentPlan updated successfully',
-      data: installmentPlan,
+      data: unstallmentPlan,
     });
   } catch (error) {
     return next(new AppError("An error occured, please try again", 500));

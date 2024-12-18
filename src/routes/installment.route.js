@@ -12,5 +12,7 @@ router.get("/", installmentController.ping)
 router.get("/getinstallments", installmentController.getAll)
 router.get("/getinstallment/:id", installmentController.getInstallment)
 router.post("/postinstallment" , installmentController.postInstallment)
+router.get("/edit/:id", installmentController.editInstallment)
+router.get("/delete/:id", installmentController.deleteInstallment)
 
 module.exports = router;

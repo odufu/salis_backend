@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
       ],
       required: true,
     },
-    Gender: {
+    gender: {
       type: String,
       enum: ['male', 'female'],
     },
@@ -57,6 +57,12 @@ const userSchema = new mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Installment'
+      }
+    ],
+    properties: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Property'
       }
     ],
   //   _campaign:[

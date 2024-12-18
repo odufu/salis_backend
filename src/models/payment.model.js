@@ -1,12 +1,14 @@
+
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-  //WHO MADE THE PAYMENT
+  // WHO MADE THE PAYMENT?
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
+
   // WHAT PROPERTY DID THEY PAY FOR?
   property: {
     type: mongoose.Schema.Types.ObjectId,
@@ -14,7 +16,12 @@ const paymentSchema = new mongoose.Schema({
     required: true,
   },
 
-  //WHAT OWNERSHIP POOL DID THEY PAY FOR, IF NOT NULL
+  isVerified: {
+    type: Boolean,
+    default: false, // Set to false by default for new donations
+  },
+
+  // WHAT OWNERSHIP POOL DID THEY PAY FOR, IF NOT NULL?
   ownershipPool: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'OwnershipPool',
@@ -28,35 +35,56 @@ const paymentSchema = new mongoose.Schema({
     default: null,
   },
 
-  //HOW MUCH DID THEY PAY?
+  // HOW MUCH DID THEY PAY?
   amount: {
     type: Number,
     required: true,
   },
 
-  //WHAT TYPE OF PAYMENT DID THEY MAKE?
+  // WHAT TYPE OF PAYMENT DID THEY MAKE?
   paymentType: {
     type: String,
-    enum: ['ownershipPool', 'installment', 'outright'],
+    enum: ["outright", "installment", "coownership"],
+    required: true
   },
 
-  //Message for payment
+  // WHAT INVOICE DOES THIS PAYMENT FULFILL?
+  invoice: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Invoice',
+  },
+
+  // MESSAGE FOR PAYMENT
   paymentNote: {
     type: String,
-    default: "Payment Initiated"
+    default: 'Payment Initiated',
   },
 
-  //PAYMENT SUCCESS STATUS
+  // PAYMENT SUCCESS STATUS
   isSuccess: {
     type: Boolean,
-    default: false, // Set to false by default for new payments
+    default: false,
   },
-  createdAt: {
+
+  // PAYMENT METHOD (e.g., Paystack, Bank Transfer, etc.)
+  paymentMethod: {
+    type: String,
+    enum: ['paystack', 'bank-transfer', 'other'],
+  },
+
+  // PAYMENT DATE
+  paymentDate: {
     type: Date,
     default: Date.now,
+  },
+
+  // TRANSACTION REFERENCE (e.g., Paystack transaction reference)
+  transactionReference: {
+    type: String,
   },
 });
 
 const Payment = mongoose.model('Payment', paymentSchema);
-
 module.exports = Payment;
+
+

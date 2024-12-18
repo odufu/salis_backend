@@ -13,7 +13,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('⚡️:: Connected to MongoDB!');
+    console.log('🔥🔥️:: Connected to MongoDB!');
   } catch (err) {
     console.error(`Can't connect to MongoDB ${err}`);
     // Retry connection at intervals

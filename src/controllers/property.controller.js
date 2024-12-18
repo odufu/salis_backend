@@ -228,14 +228,13 @@ exports.getProperty = catchAsync(async (req, res, next) => {
 
 exports.GetComments = catchAsync(async (req, res, next) => {
     try {
-        
+
         //get the property
         //get the comments in it's comments 
         //getCommentById for each of them
         // Return list of comments
 
         const data = await Comment.find()
-        console.log("Datat" + data);
 
         // Check if the Comments exists
         if (!data) {
@@ -281,15 +280,14 @@ exports.GetPropertyComments = catchAsync(async (req, res, next) => {
         }
         //get the comments in it's comments 
         property.comments.forEach(async commentId => {
-          let comment =  await Comment.findById(commentId)
-          comments.push(comment)
+            let comment = await Comment.findById(commentId)
+            comments.push(comment)
         });
         //getCommentById for each of them
         // Return list of comments
 
 
         const data = await Comment.find()
-        console.log("Datat" + data);
 
         // Check if the Comments exists
         if (!data) {
@@ -304,7 +302,7 @@ exports.GetPropertyComments = catchAsync(async (req, res, next) => {
         res.status(200).json({
             success: true,
             len: data.length,
-            data:comments
+            data: comments
         })
     } catch (error) {
         res.status(500).json({
@@ -327,7 +325,6 @@ exports.GetCommentById = catchAsync(async (commentId) => {
     try {
 
         const data = await Comment.findById(commentId);
-        console.log("Datat" + data);
 
         // Check if the property exists
         if (!data) {
@@ -335,7 +332,7 @@ exports.GetCommentById = catchAsync(async (commentId) => {
         }
 
         // Return data after the property
-       return data
+        return data
     } catch (error) {
         return next(new AppError(error.message, 500));
     }
@@ -432,8 +429,7 @@ exports.postProperty = catchAsync(async (req, res, next) => {
         housePlan,
     } = req.body;
 
-    console.log(req.user);
-    
+
     const user = await User.findById(req.user.id); // Retrieve user ID from req.user
 
     // Create a new property Object
@@ -474,14 +470,12 @@ exports.postProperty = catchAsync(async (req, res, next) => {
         siteMap,
         housePlan,
         documents,
-        status: user.userType === 'Individual' || user.userType === 'Admin' ? 'Pending' : 'Approved',
     });
 
     if (!property) {
         return next(new AppError('Please provide the required fields', 401));
     }
 
-    // IF OUTRIGHT IS NOT NULL, CREATE OUTRIGHT PAYMENT 
 
     try {
         //Add the creator's refference to the property
@@ -490,6 +484,8 @@ exports.postProperty = catchAsync(async (req, res, next) => {
         //CREATE AND APPEND PAYMENT PLAN BASE ON THE ONE SUPPLIED FROM THE FRONT
 
         if (property.paymentPlanType == "outright") {
+            // IF OUTRIGHT IS NOT NULL, CREATE OUTRIGHT PAYMENT 
+
             property.outrightPlan = property.price;
         } else if (property.paymentPlanType == "installment") {
             //GET THE INPUTS FROM THE USER FOR INSTALLMENT PAYMENT plan
@@ -507,21 +503,21 @@ exports.postProperty = catchAsync(async (req, res, next) => {
         } else {
 
             //GET THE INPUTS FROM THE ADMIN FOR CO-OWNERSHIP PAYMENT plan
-            const { maximumPool } = req.body
+            const { maximumPool, contractTerms } = req.body
             //create an instance of the plan
             const newCoOwnershipPlan = new CoOwnershipPlan({
-                property, totalValue: property.price, maximumPool,
+                property, totalValue: property.price, maximumPool, contractTerms
             })
             //save that instance 
             await newCoOwnershipPlan.save()
-            console.log(newCoOwnershipPlan);
-            
+
             //create all the pools
             for (let index = 0; index < newCoOwnershipPlan.maximumPool; index++) {
                 //create instance of the pool
                 const newPool = new OwnershipPool({
                     sharePrice: (property.price / newCoOwnershipPlan.maximumPool),
-                    equityShare: ((property.price / newCoOwnershipPlan.maximumPool) * 100 / property.price)
+                    equityShare: ((property.price / newCoOwnershipPlan.maximumPool) * 100 / property.price),
+                    coOwnershipPlan: newCoOwnershipPlan.id
                 })
                 //save the pool
                 await newPool.save()
@@ -555,6 +551,137 @@ exports.postProperty = catchAsync(async (req, res, next) => {
 
 });
 
+
+
+/**
+ * @author Joel Odufu <joel.odufu@ust.edu.ng>
+ * @description Edit Property Controller
+ * @route `/api/case/softeditcase/:id`
+ * @access Private
+ * @type PUT
+ */
+exports.editProperty = catchAsync(async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body;
+
+        // Find the property by ID
+        const property = await Property.findByIdAndUpdate(id, updates, { new: true });
+
+        // Check if the property exists
+        if (!property) {
+            return next(new AppError('Case not found', 404));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Property updated successfully',
+            data: property,
+        });
+    } catch (error) {
+        return next(new AppError(error.message, 500));
+    }
+});
+
+
+
+/**
+ * @author Joel Odufu <joel.odufu@ust.edu.ng>
+ * @description HARD Edit Property Controller
+ * @route `/api/case/hardeditcase/:id`
+ * @access Private
+ * @type PUT
+ */
+exports.hardEditProperty = catchAsync(async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const user = req.user
+        //GET THE PROPERTY AND RESET PAYMENT PLANS
+        const oldProperty = await Property.findById(id);
+        oldProperty.paymentPlanType = ""
+        oldProperty.outrightPlan = null
+        oldProperty.installmentPlan = null
+
+        //SAVE RESET
+        await oldProperty.save()
+
+        //NOW GET THE UPDATE FROM THE USER
+        const updates = req.body;
+
+
+        // Find the property by ID
+        //   const property = await Property.findByIdAndUpdate(id, updates, { new: true });
+        //Add the creator's refference to the property
+        updates.creator = user;
+
+        //CREATE AND APPEND PAYMENT PLAN BASE ON THE ONE SUPPLIED FROM THE FRONT
+
+        if (updates.paymentPlanType == "outright") {
+            updates.outrightPlan = updates.price;
+        } else if (updates.paymentPlanType == "installment") {
+            //GET THE INPUTS FROM THE USER FOR INSTALLMENT PAYMENT plan
+            const { minimumInitialPayment, closingPeriod } = req.body
+            //TODO: DELETE PREVIOUSE INSTANCE OF INSTALL MENT FOR THIS PROPERTY IF IT DOES EXIST
+            //TODO: Delet other plans if it does exist
+            //create a new instance of the plan
+            const installmentPlan = new InstallmentPlan({
+                updates, minimumInitialPayment, closingPeriod,
+            })
+            //save that instance 
+            await installmentPlan.save()
+
+            //add the saved instance to the property
+            property.installmentPlan = installmentPlan._id;
+            await property.save()
+        } else {
+
+            //GET THE INPUTS FROM THE ADMIN FOR CO-OWNERSHIP PAYMENT plan
+            const { maximumPool } = req.body
+            //create an instance of the plan
+            const newCoOwnershipPlan = new CoOwnershipPlan({
+                property, totalValue: property.price, maximumPool,
+            })
+            //save that instance 
+            await newCoOwnershipPlan.save()
+
+            //create all the pools
+            for (let index = 0; index < newCoOwnershipPlan.maximumPool; index++) {
+                //create instance of the pool
+                const newPool = new OwnershipPool({
+                    sharePrice: (property.price / newCoOwnershipPlan.maximumPool),
+                    equityShare: ((property.price / newCoOwnershipPlan.maximumPool) * 100 / property.price)
+                })
+                //save the pool
+                await newPool.save()
+                //add the pool to the plan
+                newCoOwnershipPlan.ownershipShares.push(newPool._id);
+                //save the plan
+                await newCoOwnershipPlan.save()
+            }
+
+            //append the plan to the property
+            property.coOwnershipPlan = newCoOwnershipPlan.id;
+
+            //save the property
+            await property.save()
+        }
+
+        // Save the property object to the database
+        await property.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Property created successfully',
+            data: property,
+        });
+
+
+    } catch (error) {
+        return next(new AppError(error.message, 500));
+    }
+
+});
+
 /**
  * @author Odufu Joel <joel.odufu@gmail.com>
  * @description Post a Comment Controller
@@ -563,7 +690,8 @@ exports.postProperty = catchAsync(async (req, res, next) => {
  * @type POST
  */
 exports.createComment = catchAsync(async (req, res, next) => {
-    const { propertyId, userId, content } = req.body;
+    const { propertyId, content } = req.body;
+    const userId = req.user._id
 
     try {
         const property = await Property.findById(propertyId);
@@ -617,7 +745,7 @@ exports.postSavedDraftProperty = catchAsync(async (req, res, next) => {
         return next(new AppError('Property is not a draft', 400));
     }
 
-    property.status = 'Pending';
+    property.status = 'pending';
     await property.save();
 
     res.status(200).json({

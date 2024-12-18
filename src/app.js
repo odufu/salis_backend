@@ -11,6 +11,8 @@ const propertyRoute = require('./routes/property.route');
 const installmentRoute = require('./routes/installment.route');
 const installmentPlanRoute = require('./routes/installmentPlan.route');
 const coOwnershipPlanRoute = require('./routes/coOwnershipPlan.route');
+const contractRoute = require('./routes/contract.route');
+const invoiceRoute = require('./routes/invoice.route');
 const caseRoute = require('./routes/case.route');
 const globalHandler = require('./controllers/error.controller');
 const xss = require('xss-clean');
@@ -60,6 +62,8 @@ app.use('/api/v1/property', propertyRoute)
 app.use('/api/v1/installment', installmentRoute)
 app.use('/api/v1/installmentPlan', installmentPlanRoute)
 app.use('/api/v1/coOwnershipPlan', coOwnershipPlanRoute)
+app.use('/api/v1/contract', contractRoute)
+app.use('/api/v1/invoice', invoiceRoute)
 
 app.use('/api/v1/donation', donationRoute);
 
@@ -69,7 +73,7 @@ app.use('/api/v1/case', caseRoute);
 app.use(globalHandler);
 
 app.get('/', (req, res) => {
-  res.send(' Server live ⚡️');
+  res.send(' Server live 🔥🔥️');
 });
 
 app.all('*', (req, res, next) => {

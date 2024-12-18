@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
-const PropertySchema = new mongoose.Schema({
+// if (mongoose.models['Property']) {
+//     delete mongoose.models['Property'];
+// }
+
+const propertySchema = new mongoose.Schema({
     // Basic Details
     creator: {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,14 +31,18 @@ const PropertySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comment',
     }],
-   
-    
+
+
     // Media
     images: { type: [String], default: [] },
     video: { type: String, default: '' },
 
     price: { type: Number, required: true },
-    isTaken: { type: Boolean, default: false },
+    status: {
+        type: String,
+        enum: ["pending", "open", "sold"],
+        default: "open"
+    },
 
     // Features
     eletricity: { type: Boolean, default: true },
@@ -87,6 +95,7 @@ const PropertySchema = new mongoose.Schema({
     housePlan: { type: String, default: '' },
 }, { timestamps: true }); // Includes createdAt and updatedAt fields
 
-const Property = mongoose.model('Property', PropertySchema);
+const Property = mongoose.models.Property || mongoose.model('Property', propertySchema);
+
 
 module.exports = Property;
