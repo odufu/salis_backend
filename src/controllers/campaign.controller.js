@@ -128,7 +128,7 @@ exports.createWithdrawalRequest = catchAsync(async (req, res, next) => {
       Account Name: ${accountName}
       Account Number: ${accountNumber}
       
-      Thank you for using 'Fundezer' 🚀`;
+      Thank you for using 'Salis' 🚀`;
 
     await sendEmail({
       to: process.env.ADMIN_EMAIL,

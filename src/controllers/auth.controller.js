@@ -110,7 +110,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
     await sendEmail({
       to: newUser.email,
-      subject: 'Welcome to Fundezer 🚀',
+      subject: 'Welcome to Salis 🚀',
       message,
     });
 
