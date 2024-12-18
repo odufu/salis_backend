@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const swaggerUi = require('swagger-ui-express');
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -16,6 +17,11 @@ const invoiceRoute = require('./routes/invoice.route');
 const caseRoute = require('./routes/case.route');
 const globalHandler = require('./controllers/error.controller');
 const xss = require('xss-clean');
+const path = require('path');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load(path.join(__dirname, '../swagger.yml'));
+
+
 
 const app = express();
 
@@ -54,7 +60,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Data sanitization against XSS
 app.use(xss());
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/user', userRoute);
 app.use('/api/v1/campaign', campaignRoute)

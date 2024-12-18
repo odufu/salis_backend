@@ -4,7 +4,7 @@ const dotenv = require("dotenv")
 
 dotenv.config({path: "./src/config.env"})
 
-const DATABASE_URI = process.env.LOCAL_DATABASE
+const DATABASE_URI = process.env.DATABASE
 const RECONNECT_INTERVAL = 5000; // Refresh connection every 5 seconds (adjust as needed)
 
 const connectDB = async () => {
